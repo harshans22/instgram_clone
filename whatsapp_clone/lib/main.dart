@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:whatsapp_clone/screens/login_screen.dart';
+
+import 'package:whatsapp_clone/screens/sign_up.dart';
 import 'package:whatsapp_clone/utils/colors.dart';
 
 void main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       //   mobilescreenLayout: mobilescreenlayout(),
       //   websceeenLayout: webscreenlayout(),
       // ),
-      home: LoginScreen(),
+      home: SignupScreen(),
     );
   }
 }

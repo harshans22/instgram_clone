@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:whatsapp_clone/utils/colors.dart';
 import 'package:whatsapp_clone/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,9 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Flexible(
+            Flexible(flex: 1,
               child: Container(),
-              flex: 1,
+              
             ),
             //svg image
             SvgPicture.asset(
@@ -44,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textInputType: TextInputType.emailAddress,
               textEditingController: _emailController,
             ),
-            SizedBox(
+           const SizedBox(
               height: 24,
             ),
             TextFieldInput(
@@ -53,36 +52,46 @@ class _LoginScreenState extends State<LoginScreen> {
               textEditingController: _passController,
               isPass: true,
             ),
-             SizedBox(
+            const SizedBox(
               height: 24,
             ),
-            Container(
-              child: const Text('Log in'),
-              width: double.infinity,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: const ShapeDecoration(shape: RoundedRectangleBorder(
-                 borderRadius: BorderRadius.all(Radius.circular(5)),
+            InkWell(
+              onTap: (){},
+              child: Container(
+                
+                width: double.infinity,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: const ShapeDecoration(shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                color: Colors.blue,
+                ),
+                child: const Text('Log in'),
               ),
-              color: Colors.blue,
-              )
             ),
-             SizedBox(
+            const SizedBox(
               height: 12,
             ),
-            Flexible(
+            Flexible(flex: 1,
               child: Container(),
-              flex: 1,
+              
             ),
             Row( mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
+                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child:const Text("Don't have an account?",style: TextStyle(fontWeight: FontWeight.w400),),
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                 
                 ),
-                Container(
-                  child:const Text("Sign up",style: TextStyle(fontWeight:FontWeight.bold ),),
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                GestureDetector(
+                  onTap: (){},
+                  child: Container(
+                
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child:const Text("Sign up",style: TextStyle(fontWeight:FontWeight.bold ),),
+                    
+                  ),
                 ),
               ],
             )
