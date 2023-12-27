@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:whatsapp_clone/resources/auth_resources.dart';
-import 'package:whatsapp_clone/utils/utils.dart';
+import 'package:whatsapp_clone/resources/auth_methods.dart';
+import 'package:whatsapp_clone/utils/image_for_login.dart';
 import 'package:whatsapp_clone/widgets/text_field_input.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -39,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(  resizeToAvoidBottomInset: false,
         body: SafeArea(
       child: Container(
         padding:const EdgeInsets.symmetric(horizontal: 32),
@@ -118,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
               textInputType: TextInputType.text,
               textEditingController: _bioController,
             ),
-
+    
             const SizedBox(
               height: 24,
             ),

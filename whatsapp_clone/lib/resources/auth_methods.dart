@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:whatsapp_clone/resources/Storage.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -25,6 +26,10 @@ class AuthMethods {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
+        print(cred.user!.uid);
+        String photoUrl = await StoargeMethods()
+            .uploadImageToStorage("ProfilePics", file, false);
+
         //add user to our database
         await _firestore.collection('users').doc(cred.user!.uid).set({
           "username": username,
@@ -33,6 +38,7 @@ class AuthMethods {
           "bio": bio,
           "followers": [],
           "following": [],
+          "photurl": photoUrl,
         });
         res = "success";
       }

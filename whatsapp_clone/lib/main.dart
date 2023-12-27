@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:whatsapp_clone/screens/sign_up.dart';
 import 'package:whatsapp_clone/utils/colors.dart';
 
@@ -10,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options:const FirebaseOptions(
+        options: const FirebaseOptions(
       apiKey: "AIzaSyDVYllB418P6nvemWd4IaJIvVeC7mbFRw0",
       appId: "1:987521553050:web:a8dae110b7b8b0f024c523",
       messagingSenderId: "987521553050",
@@ -18,7 +17,7 @@ void main() async {
       storageBucket: "instagramclone-e2579.appspot.com",
     ));
   } else {
-   
+   await Firebase.initializeApp();
   }
 
   runApp(const MyApp());
