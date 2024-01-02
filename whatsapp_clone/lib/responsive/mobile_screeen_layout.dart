@@ -17,7 +17,7 @@ class _mobilescreenlayoutState extends State<mobilescreenlayout> {
   Widget build(BuildContext context) {
     model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      body: Center(child: Text("harsh")),
+      body: Center(child: Text(user.username)),
     );
   }
 }
