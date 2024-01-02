@@ -15,7 +15,8 @@ class StoargeMethods {
     Reference ref =
         _storage.ref().child(childName).child(_auth.currentUser!.uid);
     UploadTask uploadTask = ref.putData(file);
-    TaskSnapshot snap = await uploadTask;
+    TaskSnapshot snap = await uploadTask;//  metadata data of uploaded file
+    // to download link of our image which is stored in firestore
     String downloadUrl = await snap.ref.getDownloadURL();
     return downloadUrl;
   }
