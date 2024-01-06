@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:whatsapp_clone/models/user.dart'
     as model; // to avoid clash of user of firebase and our User class
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:whatsapp_clone/resources/Storage.dart';
+import 'package:whatsapp_clone/resources/Storage_methods.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,38 +15,41 @@ class AuthMethods {
     User currentUser = _auth.currentUser!;
     DocumentSnapshot snap =
         await _firestore.collection("users").doc(currentUser.uid).get();
-       
+  
     return model.User.fromSnap(snap);
-   
   }
 
-
   //signup user
-  Future<String> signUpUser(
-      {required String email, //curly brackets means named paramters
-      required String password,
-      required String username,
-      required String bio,
-      required Uint8List file}) async {
+  Future<String> signUpUser({
+    required String email, //curly brackets means named paramters
+    required String password,
+    required String username,
+    required String bio,
+    required Uint8List file,
+  }) async {
     String res = "some error occured";
     try {
-      if (email.isNotEmpty || password.isNotEmpty || bio.isNotEmpty) {
+      if (email.isNotEmpty ||
+          password.isNotEmpty ||
+          bio.isNotEmpty ||
+          file != null) {
         //register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        print(cred.user!.uid);
+
         String photourl = await StoargeMethods()
             .uploadImageToStorage("ProfilePics", file, false);
 
         //add user to our database
         model.User user = model.User(
-            email: email,
-            uid: cred.user!.uid,
-            photourl: photourl,
-            username: username,
-            bio: bio,
-            followers: [],
-            following: []);
+          email: email,
+          uid: cred.user!.uid,
+          photourl: photourl,
+          username: username,
+          bio: bio,
+          followers: [],
+          following: [],
+        );
         await _firestore
             .collection('users')
             .doc(cred.user!.uid)
@@ -63,7 +66,6 @@ class AuthMethods {
     } catch (error) {
       res = error.toString();
     }
-
     return res;
   }
 
@@ -87,7 +89,7 @@ class AuthMethods {
     } catch (error) {
       res = error.toString();
     }
-    print(res);
+    //print(res);
     return res;
   }
 }

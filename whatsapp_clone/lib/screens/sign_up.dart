@@ -31,12 +31,12 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
     _emailController.dispose();
     _passController.dispose();
-    _bioController.dispose();
+   
     _usernameController.dispose();
   }
 
   // function to select image
-  void selectImage() async {
+  selectImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
       _image = im;
@@ -53,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
         password: _passController.text,
         username: _usernameController.text,
         bio: _bioController.text,
-        file: _image!);
+        file: _image!,);
     setState(() {
       isloading = false;
     });
@@ -68,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
               )));
     }
   }
-
+  
   void navigatetologin() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
