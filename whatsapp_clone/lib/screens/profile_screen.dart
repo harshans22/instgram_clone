@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/resources/auth_methods.dart';
+import 'package:whatsapp_clone/resources/firestore_methods.dart';
+import 'package:whatsapp_clone/screens/login_screen.dart';
 import 'package:whatsapp_clone/utils/colors.dart';
 import 'package:whatsapp_clone/utils/utils.dart';
 import 'package:whatsapp_clone/widgets/follow_unfollow_button.dart';
@@ -41,8 +44,9 @@ class _ProfileCsreenState extends State<ProfileCsreen> {
       //get post Length
       var postsnap = await FirebaseFirestore.instance
           .collection("Posts")
-          .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("uid", isEqualTo: widget.uid)
           .get();
+
       postlength = postsnap.docs.length;
       userData = usersnap.data()!;
       followers = usersnap.data()!["followers"].length;
@@ -108,9 +112,18 @@ class _ProfileCsreenState extends State<ProfileCsreen> {
                                             backgroundcolor:
                                                 mobileBackgroundColor,
                                             BorderColor: Colors.grey,
-                                            text: "Edit Profile",
+                                            text: "Sign out",
                                             textcolor: primaryColor,
-                                            function: () {},
+                                            function: () async {
+                                              await AuthMethods().signout();
+                                              if (context.mounted) {
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                LoginScreen()));
+                                              }
+                                            },
                                           )
                                         : isfollowing
                                             ? FollowButton(
@@ -118,14 +131,34 @@ class _ProfileCsreenState extends State<ProfileCsreen> {
                                                 BorderColor: Colors.grey,
                                                 text: "Unfollow",
                                                 textcolor: Colors.black,
-                                                function: () {},
+                                                function: () async {
+                                                  await FirestoreMethods()
+                                                      .followuser(
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          userData["uid"]);
+                                                  setState(() {
+                                                    isfollowing = false;
+                                                    followers--;
+                                                  });
+                                                },
                                               )
                                             : FollowButton(
                                                 backgroundcolor: Colors.blue,
                                                 BorderColor: Colors.blue,
                                                 text: "Follow",
                                                 textcolor: Colors.white,
-                                                function: () {},
+                                                function: () async {
+                                                  await FirestoreMethods()
+                                                      .followuser(
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          userData["uid"]);
+                                                  setState(() {
+                                                    isfollowing = true;
+                                                    followers++;
+                                                  });
+                                                },
                                               ),
                                   ],
                                 )
@@ -180,10 +213,12 @@ class _ProfileCsreenState extends State<ProfileCsreen> {
                                   DocumentSnapshot snap =
                                       snapshot.data!.docs[index];
                                   return Container(
-                                    child: Image(image:NetworkImage(
-                                      snap["posturl"],
+                                    child: Image(
+                                      image: NetworkImage(
+                                        snap["posturl"],
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,),
                                   );
                                 });
                           })
