@@ -34,4 +34,67 @@ class FirestoreMethods {
     }
     return res;
   }
+
+  //like post
+  Future<void> likepost(
+    String postId,
+    String uid,
+    List likes,
+  ) async {
+    try {
+      if (likes.contains(uid)) {
+        //when we have already liked the post
+        _firestore.collection("Posts").doc(postId).update({
+          "likes": FieldValue.arrayRemove(
+              [uid]), //removing the uid which has already liked the post
+        });
+      } else {
+        //for uid which has not liked the post
+        _firestore.collection("Posts").doc(postId).update({
+          "likes": FieldValue.arrayUnion(
+              [uid]), //adding the uid which has not liked the post
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //function for comments
+  Future<void> postComment(String postId, String text, String uid, String name,
+      String profilepic) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        //creating collections of each comment based on unique commentid
+        await _firestore
+            .collection("Posts")
+            .doc(postId)
+            .collection("comments")
+            .doc(commentId)
+            .set({
+          "profilePic": profilepic,
+          "name": name,
+          "uid": uid,
+          "text": text,
+          'commentId': commentId,
+          'datePublished': DateTime.now(),
+        });
+        print("success");
+      } else {
+        print("text is empty");
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //deleting a post
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection("Posts").doc(postId).delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
