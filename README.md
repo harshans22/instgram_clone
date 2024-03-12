@@ -1,1 +1,1 @@
-it contains the instagram clobe written in flutter
+it contains the instagram clone written in flutter
