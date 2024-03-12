@@ -43,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: isShowusers
           ? FutureBuilder(
-              //used when want to build widget when data keeps on changing
+              //used when want to build widget when u want to load data once
               future: FirebaseFirestore.instance
                   .collection("users")
                   .where("username",

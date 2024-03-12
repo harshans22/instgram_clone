@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/providers/user_provider.dart';
 import 'package:whatsapp_clone/resources/firestore_methods.dart';
-import 'package:whatsapp_clone/responsive/mobile_screeen_layout.dart';
 import 'package:whatsapp_clone/utils/colors.dart';
 import 'package:whatsapp_clone/widgets/comments_card.dart';
 
@@ -38,7 +37,10 @@ class _CommentSectionState extends State<CommentSection> {
         stream: FirebaseFirestore.instance
             .collection("Posts")
             .doc(widget.snap["postId"])
-            .collection("comments").orderBy("datePublished",descending: true)//order by used to sort comment based on specified field and here it is datePublished
+            .collection("comments")
+            .orderBy("datePublished",
+                descending:
+                    true) //order by used to sort comment based on specified field and here it is datePublished
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -50,8 +52,8 @@ class _CommentSectionState extends State<CommentSection> {
           return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) => CommentCard(
-                snap:snapshot.data!.docs[index].data(),
-              ));
+                    snap: snapshot.data!.docs[index].data(),
+                  ));
         },
       ),
       bottomNavigationBar: SafeArea(
@@ -63,8 +65,7 @@ class _CommentSectionState extends State<CommentSection> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(user.photourl
-                    ),
+                backgroundImage: NetworkImage(user.photourl),
                 radius: 18,
               ),
               Expanded(

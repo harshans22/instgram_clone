@@ -41,13 +41,14 @@ class _ProfileCsreenState extends State<ProfileCsreen> {
           .collection("users")
           .doc(widget.uid)
           .get();
+
       //get post Length
       var postsnap = await FirebaseFirestore.instance
           .collection("Posts")
           .where("uid", isEqualTo: widget.uid)
           .get();
 
-      postlength = postsnap.docs.length;
+     postlength = postsnap.docs.length;
       userData = usersnap.data()!;
       followers = usersnap.data()!["followers"].length;
       following = usersnap.data()!["following"].length;

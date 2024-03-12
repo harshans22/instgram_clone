@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:whatsapp_clone/models/user.dart';
-import 'package:whatsapp_clone/providers/user_provider.dart';
+
 
 class CommentCard extends StatefulWidget {
   final snap;
@@ -15,7 +13,7 @@ class CommentCard extends StatefulWidget {
 class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+  //  final User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
       child: Row(
@@ -43,10 +41,10 @@ class _CommentCardState extends State<CommentCard> {
                     ]),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 4),
+                    padding:const  EdgeInsets.only(top: 4),
                     child: Text(
                       DateFormat.yMMMd().format(widget.snap["datePublished"].toDate()),
-                      style: TextStyle(
+                      style:const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),

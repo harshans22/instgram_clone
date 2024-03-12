@@ -160,7 +160,7 @@ class _AddpostScreenState extends State<AddpostScreen> {
                       width: MediaQuery.of(context).size.width * 0.45,
                       child: TextField(
                         controller: _descriptioncontroller,
-                        decoration: InputDecoration(
+                        decoration:const InputDecoration(
                           hintText: ("Write caption..."),
                           border: InputBorder.none,
                         ),
@@ -174,6 +174,7 @@ class _AddpostScreenState extends State<AddpostScreen> {
                       child: AspectRatio(
                         aspectRatio: 487 / 451,
                         child: Container(
+                          
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: MemoryImage(_file!),

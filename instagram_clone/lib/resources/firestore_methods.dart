@@ -7,6 +7,7 @@ import 'package:whatsapp_clone/resources/Storage_methods.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  
 //uplaod post
   Future<String> uplaodPost(String description, Uint8List file, String uid,
       String username, String profImage) async {
